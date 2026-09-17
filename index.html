@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>즐거운캠핑 시즌1 · 모닥불이 있는 밤</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F1EBDA;
+    --bg-alt: #E6DDC4;
+    --surface: #FFFDF7;
+    --ink: #1F3A2E;
+    --ink-soft: #4B5F4F;
+    --accent: #C97F2A;
+    --accent-ink: #7A4A16;
+    --dusk: #5D8296;
+    --line: rgba(31, 58, 46, 0.16);
+    --shadow: rgba(31, 30, 20, 0.10);
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --bg: #131F18;
+      --bg-alt: #1A2A20;
+      --surface: #1C2B21;
+      --ink: #F1EBDA;
+      --ink-soft: #B9C4B4;
+      --accent: #E5A75B;
+      --accent-ink: #F3CE9C;
+      --dusk: #8FB6C7;
+      --line: rgba(241, 235, 218, 0.16);
+      --shadow: rgba(0, 0, 0, 0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #131F18;
+    --bg-alt: #1A2A20;
+    --surface: #1C2B21;
+    --ink: #F1EBDA;
+    --ink-soft: #B9C4B4;
+    --accent: #E5A75B;
+    --accent-ink: #F3CE9C;
+    --dusk: #8FB6C7;
+    --line: rgba(241, 235, 218, 0.16);
+    --shadow: rgba(0, 0, 0, 0.35);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Noto Sans KR", "Pretendard", -apple-system, sans-serif;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .display {
+    font-family: "Gowun Batang", "Noto Serif KR", serif;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  a { color: inherit; text-decoration: none; }
+  img, svg { max-width: 100%; display: block; }
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+  section { position: relative; }
+
+  /* ---------- NAV ---------- */
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 1080px; margin: 0 auto; padding: 16px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    font-family: "Gowun Batang", serif; font-weight: 700; font-size: 1.05rem;
+  }
+  .brand-mark {
+    width: 34px; height: 34px; flex-shrink: 0;
+  }
+  .nav-links { display: flex; gap: 26px; font-size: 0.92rem; color: var(--ink-soft); flex-wrap: wrap; }
+  .nav-links a:hover { color: var(--accent-ink); }
+  .nav-cta {
+    padding: 9px 18px; border-radius: 999px;
+    background: var(--ink); color: var(--bg);
+    font-size: 0.88rem; font-weight: 600; white-space: nowrap;
+  }
+  :root:not([data-theme="light"]) .nav-cta { background: var(--accent); color: #1A1206; }
+  @media (prefers-color-scheme: dark) { .nav-cta { background: var(--accent); color: #1A1206; } }
+  [data-theme="dark"] .nav-cta { background: var(--accent); color: #1A1206; }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    padding: 88px 0 60px;
+    overflow: hidden;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .eyebrow-plain { color: var(--dusk); font-weight: 600; font-size: 0.95rem; margin-bottom: 14px; }
+  .hero h1 {
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    line-height: 1.18;
+  }
+  .hero h1 em { font-style: normal; color: var(--accent-ink); }
+  .hero p.lede {
+    margin-top: 20px; font-size: 1.08rem; color: var(--ink-soft); max-width: 46ch;
+  }
+  .hero-actions { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 24px; border-radius: 999px; font-weight: 600; font-size: 0.95rem;
+    border: 1px solid transparent; cursor: pointer;
+  }
+  .btn-solid { background: var(--accent); color: #241705; }
+  .btn-outline { border-color: var(--ink); color: var(--ink); }
+  .btn-outline:hover { background: var(--ink); color: var(--bg); }
+
+  .stat-row { display: flex; gap: 34px; margin-top: 40px; flex-wrap: wrap; }
+  .stat b { display: block; font-family: "Gowun Batang", serif; font-size: 1.5rem; }
+  .stat span { font-size: 0.85rem; color: var(--ink-soft); }
+
+  .hero-art { position: relative; }
+  .hero-art svg { width: 100%; height: auto; }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .kicker { color: var(--dusk); font-weight: 600; font-size: 0.95rem; }
+  .sec-head { margin-bottom: 40px; max-width: 60ch; }
+  .sec-head h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); margin-top: 10px; }
+
+  section.band { padding: 76px 0; }
+  section.band.alt { background: var(--bg-alt); }
+  section.band.dark {
+    background: var(--ink); color: var(--bg);
+  }
+  section.band.dark .ink-soft-on-dark { color: color-mix(in srgb, var(--bg) 70%, transparent); }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .about-grid p { color: var(--ink-soft); margin-top: 16px; }
+  .season-strip {
+    display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap;
+  }
+  .season-chip {
+    padding: 6px 14px; border: 1px solid var(--line); border-radius: 999px;
+    font-size: 0.82rem; color: var(--ink-soft);
+  }
+  .season-chip.now { border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+
+  /* ---------- SCHEDULE (timeline) ---------- */
+  .day-tabs { display: flex; gap: 10px; margin-bottom: 34px; flex-wrap: wrap; }
+  .day-tab {
+    padding: 8px 18px; border-radius: 999px; border: 1px solid var(--line);
+    font-size: 0.88rem; color: var(--ink-soft); font-weight: 600;
+  }
+  .day-tab.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+  .timeline { position: relative; padding-left: 26px; }
+  .timeline::before {
+    content: ""; position: absolute; left: 6px; top: 6px; bottom: 6px; width: 2px;
+    background: var(--line);
+  }
+  .t-item { position: relative; padding-bottom: 30px; }
+  .t-item:last-child { padding-bottom: 0; }
+  .t-item::before {
+    content: ""; position: absolute; left: -26px; top: 4px; width: 12px; height: 12px;
+    border-radius: 50%; background: var(--accent); border: 3px solid var(--bg-alt);
+  }
+  .t-time { font-weight: 700; color: var(--accent-ink); font-size: 0.92rem; }
+  .t-title { font-family: "Gowun Batang", serif; font-size: 1.12rem; margin-top: 4px; }
+  .t-desc { color: var(--ink-soft); font-size: 0.92rem; margin-top: 4px; }
+
+  .manner-note {
+    margin-top: 44px; padding: 22px 26px; border-radius: 18px;
+    background: var(--surface); border: 1px solid var(--line);
+  }
+  .manner-note h3 { font-size: 1.02rem; margin-bottom: 10px; }
+  .manner-note ul { margin: 0; padding-left: 18px; color: var(--ink-soft); font-size: 0.92rem; }
+  .manner-note li { margin-bottom: 6px; }
+
+  /* ---------- PROGRAMS ---------- */
+  .prog-list { display: flex; flex-direction: column; gap: 2px; }
+  .prog-row {
+    display: grid; grid-template-columns: 90px 1fr auto; gap: 24px; align-items: center;
+    padding: 26px 0; border-top: 1px solid var(--line);
+  }
+  .prog-row:last-child { border-bottom: 1px solid var(--line); }
+  .prog-num { font-family: "Gowun Batang", serif; font-size: 1.6rem; color: var(--dusk); opacity: .55; }
+  .prog-name { font-family: "Gowun Batang", serif; font-size: 1.2rem; }
+  .prog-desc { color: var(--ink-soft); font-size: 0.92rem; margin-top: 6px; }
+  .prog-tag {
+    font-size: 0.78rem; padding: 5px 12px; border-radius: 999px;
+    border: 1px solid var(--line); color: var(--ink-soft); white-space: nowrap; height: fit-content;
+  }
+
+  /* ---------- VENUE ---------- */
+  .venue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+  .price-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 20px;
+    padding: 30px 28px; margin-top: 24px;
+  }
+  .price-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 0.96rem; }
+  .price-row:last-child { border-bottom: none; }
+  .price-row b { font-family: "Gowun Batang", serif; font-size: 1.05rem; }
+  .incl { margin-top: 18px; color: var(--ink-soft); font-size: 0.86rem; }
+
+  .map-frame {
+    border-radius: 20px; overflow: hidden; border: 1px solid var(--line);
+    aspect-ratio: 4/3.2;
+  }
+
+  /* ---------- APPLY ---------- */
+  .apply-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 24px;
+    padding: 44px; text-align: center; max-width: 640px; margin: 0 auto;
+  }
+  .apply-card .display { font-size: 1.5rem; margin-top: 14px; }
+  .apply-card p { color: var(--ink-soft); margin-top: 12px; }
+  .apply-note {
+    margin-top: 26px; padding: 16px 20px; border-radius: 14px;
+    background: var(--bg-alt); font-size: 0.88rem; color: var(--ink-soft);
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer { padding: 56px 0 40px; border-top: 1px solid var(--line); }
+  .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; }
+  .foot-col h4 { font-size: 0.88rem; color: var(--ink-soft); font-weight: 600; margin-bottom: 12px; }
+  .foot-col a, .foot-col div { display: block; font-size: 0.9rem; margin-bottom: 8px; color: var(--ink-soft); }
+  .foot-col a:hover { color: var(--accent-ink); }
+  .foot-bottom { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 0.8rem; color: var(--ink-soft); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 820px) {
+    .nav-links { display: none; }
+    .hero-grid, .about-grid, .venue-grid { grid-template-columns: 1fr; }
+    .hero { padding-top: 64px; }
+    .foot-grid { grid-template-columns: 1fr; gap: 28px; }
+    .prog-row { grid-template-columns: 50px 1fr; }
+    .prog-tag { grid-column: 2; }
+  }
+
+  :focus-visible { outline: 2px solid var(--dusk); outline-offset: 3px; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none">
+        <path d="M20 6 L34 32 H6 Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+        <path d="M20 16 L29 32 H11 Z" fill="var(--accent)" stroke="none"/>
+        <circle cx="20" cy="6" r="1.6" fill="var(--accent)"/>
+      </svg>
+      즐거운캠핑
+    </div>
+    <nav class="nav-links">
+      <a href="#about">소개</a>
+      <a href="#schedule">일정</a>
+      <a href="#programs">프로그램</a>
+      <a href="#venue">장소</a>
+    </nav>
+    <a href="#apply" class="nav-cta">참가 신청</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow-plain">즐거운캠핑 시즌 1</div>
+      <h1>모닥불이 있는 밤,<br><em>웃음이 있는 캠핑</em></h1>
+      <p class="lede">거창한 프로그램보다 오래 기억에 남는 저녁 한 끼와 대화. 강원도 홍천 시냇가에서 하룻밤, 40팀의 캠퍼 가족이 함께합니다.</p>
+      <div class="hero-actions">
+        <a href="#apply" class="btn btn-solid">참가 신청하기</a>
+        <a href="#schedule" class="btn btn-outline">일정 보기</a>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><b>11.7 – 11.8</b><span>1박 2일</span></div>
+        <div class="stat"><b>40팀</b><span>선착순 모집</span></div>
+        <div class="stat"><b>강원 홍천</b><span>둔내시냇가 캠핑장</span></div>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 420 380">
+        <ellipse cx="210" cy="345" rx="180" ry="18" fill="var(--line)"/>
+        <path d="M210 60 L300 300 H120 Z" fill="var(--surface)" stroke="var(--ink)" stroke-width="2.5"/>
+        <path d="M210 60 L210 300" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M175 300 L210 190 L245 300 Z" fill="var(--bg)" stroke="var(--ink)" stroke-width="2"/>
+        <g transform="translate(60,250)">
+          <circle cx="0" cy="30" r="26" fill="var(--accent)" opacity="0.85"/>
+          <path d="M-4 30 Q0 5 6 30 Q0 18 -4 30" fill="#fff" opacity="0.7"/>
+          <path d="M-16 40 L16 40 L10 58 L-10 58 Z" fill="var(--ink-soft)"/>
+        </g>
+        <g stroke="var(--dusk)" stroke-width="2.5" stroke-linecap="round" fill="none">
+          <path d="M320 90 Q335 60 320 30"/>
+          <path d="M300 100 Q290 70 305 45"/>
+        </g>
+        <path d="M0 320 Q210 300 420 320" stroke="var(--line)" stroke-width="2" fill="none"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="band alt">
+  <div class="wrap about-grid">
+    <div>
+      <div class="kicker">즐거운캠핑 소개</div>
+      <h2>작게 시작해서, 오래가는 모임</h2>
+      <p>2025년 겨울, 캠핑을 좋아하는 친구 다섯 명이 시냇가에 모여 하룻밤을 보낸 것이 시작이었습니다. "다음엔 더 많이 모여서 하자"는 말이 진짜 행사가 되었고, 이제 시즌 1을 준비하고 있습니다.</p>
+      <p>화려한 이벤트보다는 좋은 사람들과 느긋한 저녁, 아이들이 마음껏 뛰어놀 수 있는 넓은 공터, 그리고 다음 계절에 또 만나고 싶어지는 분위기를 만드는 것이 목표입니다.</p>
+      <div class="season-strip">
+        <span class="season-chip now">시즌 1 · 웃음이 있는 캠핑</span>
+        <span class="season-chip">시즌 2 · 준비 중</span>
+      </div>
+    </div>
+    <div aria-hidden="true">
+      <svg viewBox="0 0 380 300">
+        <rect x="0" y="0" width="380" height="300" rx="20" fill="var(--surface)" stroke="var(--line)"/>
+        <g transform="translate(60,60)">
+          <path d="M0 160 L60 40 L120 160 Z" fill="none" stroke="var(--ink)" stroke-width="2"/>
+          <path d="M90 160 L140 60 L190 160 Z" fill="none" stroke="var(--dusk)" stroke-width="2"/>
+          <circle cx="220" cy="30" r="20" fill="var(--accent)" opacity="0.9"/>
+          <path d="M0 160 H260" stroke="var(--line)" stroke-width="2"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="schedule" class="band">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">일정</div>
+      <h2>1박 2일, 여유 있게 흘러가는 시간표</h2>
+    </div>
+
+    <div class="day-tabs">
+      <span class="day-tab on">Day 1 · 토요일</span>
+      <span class="day-tab">Day 2 · 일요일</span>
+    </div>
+
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-time">13:00 –</div>
+        <div class="t-title">체크인 · 자리 잡기</div>
+        <div class="t-desc">도착 순서대로 자유롭게 사이트를 배정해 드려요. 서두르지 않으셔도 됩니다.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">17:30 –</div>
+        <div class="t-title">모닥불 저녁 식사</div>
+        <div class="t-desc">다 같이 장작을 모아 불을 피우고, 각자 준비해온 음식을 나눠 먹는 시간.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">19:30 –</div>
+        <div class="t-title">별빛 아래 이야기 밤</div>
+        <div class="t-desc">기타 연주와 함께하는 소소한 이야기 시간. 참여는 자유예요.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">익일 09:00 –</div>
+        <div class="t-title">아침 브런치 & 정리</div>
+        <div class="t-desc">간단한 브런치를 나눠 먹고, 다음 시즌을 기약하며 정리합니다.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">11:00</div>
+        <div class="t-title">체크아웃</div>
+        <div class="t-desc">아쉬움은 다음 시즌에 풀어보아요.</div>
+      </div>
+    </div>
+
+    <div class="manner-note">
+      <h3>함께 지켜주세요</h3>
+      <ul>
+        <li>음향 기기 사용은 밤 10시까지만 가능합니다.</li>
+        <li>밤 11시 이후에는 이웃 사이트를 위해 목소리를 낮춰주세요.</li>
+        <li>쓰레기는 각자 가져오신 만큼 되가져가 주세요.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="programs" class="band alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">프로그램</div>
+      <h2>참여는 자유, 부담은 없이</h2>
+    </div>
+    <div class="prog-list">
+      <div class="prog-row">
+        <div class="prog-num">01</div>
+        <div>
+          <div class="prog-name">모닥불 저녁 식사</div>
+          <div class="prog-desc">각 사이트에서 준비한 음식을 나누는 작은 포틀럭. 장작과 불멍은 저희가 준비할게요.</div>
+        </div>
+        <div class="prog-tag">전원 참여</div>
+      </div>
+      <div class="prog-row">
+        <div class="prog-num">02</div>
+        <div>
+          <div class="prog-name">캠핑장터 나눔 마켓</div>
+          <div class="prog-desc">안 쓰는 캠핑용품을 가져와 서로 나누거나 교환하는 작은 벼룩시장.</div>
+        </div>
+        <div class="prog-tag">자유 참여</div>
+      </div>
+      <div class="prog-row">
+        <div class="prog-num">03</div>
+        <div>
+          <div class="prog-name">별빛 트레킹</div>
+          <div class="prog-desc">랜턴을 들고 시냇가를 따라 걷는 30분 산책. 가족 단위로 참여하기 좋아요.</div>
+        </div>
+        <div class="prog-tag">사전 신청</div>
+      </div>
+      <div class="prog-row">
+        <div class="prog-num">04</div>
+        <div>
+          <div class="prog-name">아이들 보드게임 존</div>
+          <div class="prog-desc">아이들이 모여 함께 놀 수 있는 그늘막 아래 보드게임 코너를 운영합니다.</div>
+        </div>
+        <div class="prog-tag">전원 참여</div>
+      </div>
+      <div class="prog-row">
+        <div class="prog-num">05</div>
+        <div>
+          <div class="prog-name">아침 브런치 클래스</div>
+          <div class="prog-desc">간단한 캠핑 브런치 레시피를 함께 만들어보는 짧은 클래스.</div>
+        </div>
+        <div class="prog-tag">사전 신청</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="venue" class="band">
+  <div class="wrap venue-grid">
+    <div>
+      <div class="kicker">캠핑장 소개</div>
+      <h2>둔내시냇가 캠핑장</h2>
+      <p style="color:var(--ink-soft); margin-top:14px;">맑은 시냇물을 따라 사이트가 넓게 자리한 캠핑장입니다. 40팀이 머물러도 여유로운 간격, 아이들이 물놀이할 수 있는 얕은 여울까지 갖추고 있어요.</p>
+      <p style="color:var(--ink-soft); margin-top:10px;">강원도 홍천군 둔내로 128 · 서울에서 약 1시간 30분</p>
+
+      <div class="price-card">
+        <div class="price-row"><span>캠핑 사이트</span><b>7만원</b></div>
+        <div class="price-row"><span>카라반존</span><b>12만원</b></div>
+        <div class="incl">1박 2일 이용료, 웰컴 간식, 프로그램 참가비 포함 · 별빛 트레킹은 별도 신청</div>
+      </div>
+    </div>
+    <div class="map-frame" aria-hidden="true">
+      <svg viewBox="0 0 300 250" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+        <rect width="300" height="250" fill="var(--bg-alt)"/>
+        <path d="M0 180 Q90 140 150 175 T300 160" stroke="var(--dusk)" stroke-width="14" fill="none" opacity="0.5"/>
+        <circle cx="80" cy="90" r="6" fill="var(--ink)" opacity="0.4"/>
+        <circle cx="140" cy="70" r="6" fill="var(--ink)" opacity="0.4"/>
+        <circle cx="200" cy="100" r="6" fill="var(--ink)" opacity="0.4"/>
+        <circle cx="150" cy="130" r="10" fill="var(--accent)"/>
+        <text x="150" y="160" text-anchor="middle" font-family="Noto Sans KR" font-size="13" fill="var(--ink-soft)">둔내시냇가 캠핑장</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="apply" class="band dark">
+  <div class="wrap">
+    <div class="apply-card">
+      <div class="kicker" style="color:var(--dusk);">참가 신청</div>
+      <div class="display">즐거운캠핑 시즌 1, 함께해요</div>
+      <p>선착순 40팀 마감입니다. 참가 신청 후 참가비 입금 순서로 자리가 확정돼요.</p>
+      <a href="#" class="btn btn-solid" style="margin-top:22px;">참가 신청서 작성하기</a>
+      <div class="apply-note">이 페이지는 데모로 제작되었습니다. 실제 신청 폼은 구글폼이나 네이버폼을 연결해 사용하실 수 있어요.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="brand" style="margin-bottom:10px;">
+          <svg class="brand-mark" viewBox="0 0 40 40" fill="none" width="26" height="26">
+            <path d="M20 6 L34 32 H6 Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M20 16 L29 32 H11 Z" fill="var(--accent)" stroke="none"/>
+          </svg>
+          즐거운캠핑
+        </div>
+        <div style="color:var(--ink-soft); font-size:0.88rem;">작게 시작해서 오래가는 캠핑 모임을 만듭니다.</div>
+      </div>
+      <div class="foot-col">
+        <h4>바로가기</h4>
+        <a href="#about">소개</a>
+        <a href="#schedule">일정</a>
+        <a href="#programs">프로그램</a>
+        <a href="#venue">장소</a>
+      </div>
+      <div class="foot-col">
+        <h4>행사 정보</h4>
+        <div>2026. 11. 7 – 11. 8</div>
+        <div>1박 2일 · 40팀</div>
+        <div>강원 홍천 둔내시냇가 캠핑장</div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 즐거운캠핑</span>
+      <span>본 페이지는 예시로 제작된 데모 사이트입니다</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
