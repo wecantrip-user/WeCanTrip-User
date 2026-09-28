@@ -620,7 +620,7 @@
 
 <style>
   .sm-q{width:100%;max-width:420px;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit;margin-bottom:12px}
-  .sm-info{max-width:420px;padding:10px 14px;margin-bottom:14px;border-left:4px solid var(--accent);background:var(--surface);color:var(--ink);border-radius:6px}
+  .sm-info{white-space:pre-line;max-width:420px;padding:10px 14px;margin-bottom:14px;border-left:4px solid var(--accent);background:var(--surface);color:var(--ink);border-radius:6px}
   .sm-scroll{overflow-x:auto;border:1.5px solid var(--line);border-radius:12px;background:var(--surface)}
   .sm-stage{position:relative;min-width:860px}
   .sm-stage img{display:block;width:100%;height:auto}
@@ -632,12 +632,52 @@
 </style>
 <script>
 (function(){
+  /* ▼ 사이트별 상세 정보: 바닥은 '데크' 또는 '파쇄석', 크기는 예) '4m × 5m' 처럼 적어주세요. 비워두면 '준비 중'으로 나와요. */
+  var DETAIL = {
+    'A-1': {floor:'', size:'', memo:''},
+    'A-2': {floor:'', size:'', memo:''},
+    'A-3': {floor:'', size:'', memo:''},
+    'A-4': {floor:'', size:'', memo:''},
+    'A-5': {floor:'', size:'', memo:''},
+    'V-1': {floor:'', size:'', memo:''},
+    'K-1': {floor:'', size:'', memo:''},
+    'K-2': {floor:'', size:'', memo:''},
+    'K-3': {floor:'', size:'', memo:''},
+    'O-1': {floor:'', size:'', memo:''},
+    'O-2': {floor:'', size:'', memo:''},
+    'O-3': {floor:'', size:'', memo:''},
+    'M-1': {floor:'', size:'', memo:''},
+    'M-2': {floor:'', size:'', memo:''},
+    'M-3': {floor:'', size:'', memo:''},
+    'M-4': {floor:'', size:'', memo:''},
+    'M-5': {floor:'', size:'', memo:''},
+    'M-6': {floor:'', size:'', memo:''},
+    'M-7': {floor:'', size:'', memo:''},
+    'M-8': {floor:'', size:'', memo:''},
+    'D-1': {floor:'', size:'', memo:''},
+    'D-2': {floor:'', size:'', memo:''},
+    'D-3': {floor:'', size:'', memo:''},
+    'D-4': {floor:'', size:'', memo:''},
+    'D-5': {floor:'', size:'', memo:''},
+    'D-6': {floor:'', size:'', memo:''},
+    'D-7': {floor:'', size:'', memo:''},
+    'D-8': {floor:'', size:'', memo:''},
+    'D-9': {floor:'', size:'', memo:''},
+    'D-10': {floor:'', size:'', memo:''},
+  };
+  /* ▲ 여기까지 */
   var spots=[].slice.call(document.querySelectorAll('.sm-spot')),info=document.getElementById('smInfo'),sc=document.getElementById('smScroll');
   function show(el,scroll){
     spots.forEach(function(s){s.classList.remove('hit')});
     if(!el){return}
     el.classList.add('hit');
-    info.textContent=el.dataset.id+' · '+el.dataset.nick;
+    var d=DETAIL[el.dataset.id]||{},t=el.dataset.id+' · '+el.dataset.nick;
+    var parts=[];
+    if(d.floor){parts.push('바닥: '+d.floor)}
+    if(d.size){parts.push('크기: '+d.size)}
+    t+='\n'+(parts.length?parts.join(' · '):'바닥·크기 정보는 준비 중이에요');
+    if(d.memo){t+='\n'+d.memo}
+    info.textContent=t;
     if(scroll){sc.scrollTo({left:el.offsetLeft-sc.clientWidth/2+el.offsetWidth/2,behavior:'smooth'});sc.parentNode.scrollIntoView({block:'nearest'})}
   }
   spots.forEach(function(s){s.addEventListener('click',function(){show(s,false)})});
